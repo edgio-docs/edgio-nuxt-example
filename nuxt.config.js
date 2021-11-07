@@ -37,7 +37,7 @@ export default {
   build: {
     extend() {
       const BUILD_ID = new Date().getTime()
-      fs.writeFileSync('BUILD_ID.txt', String(BUILD_ID))
+      fs.writeFileSync('BUILD_ID.js', `export const BUILD_ID=${String(BUILD_ID)}`)
     },
   },
 }

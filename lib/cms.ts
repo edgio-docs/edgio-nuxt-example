@@ -1,6 +1,6 @@
 import fetch from 'axios'
 // @ts-ignore
-import BUILD_ID from '../BUILD_ID.txt'
+import { BUILD_ID } from '../BUILD_ID.js'
 
 const origin = 'https://layer0-docs-layer0-examples-api-default.layer0.link'
 
