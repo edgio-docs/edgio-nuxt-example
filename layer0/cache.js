@@ -23,3 +23,17 @@ export const API_CACHE_HANDLER = ({ removeUpstreamResponseHeader, cache, proxy }
   })
   proxy('api', { path: '/api/:path*' })
 }
+
+export const ASSET_CACHE_HANDLER = ({ removeUpstreamResponseHeader, cache }) => {
+  removeUpstreamResponseHeader('cache-control')
+  cache({
+    browser: {
+      maxAgeSeconds: 0,
+      serviceWorkerSeconds: 60 * 60 * 24 * 365,
+    },
+    edge: {
+      maxAgeSeconds: 60 * 60 * 24 * 365,
+      forcePrivateCaching: true,
+    },
+  })
+}
