@@ -18,11 +18,11 @@ export default {
 </script>
 
 <template>
-  <div class="container center flex flex-row">
-    <div class="container px-4">
+  <div class="container center flex flex-col items-center md:flex-row pb-20">
+    <div class="container p-5 flex flex-col items-center">
       <img :src="product.picture" :alt="product.name" />
     </div>
-    <div class="container px-4 flex flex-col">
+    <div class="container p-5 flex flex-col items-center md:items-start text-center md:text-left">
       <h2 class="font-bold py-2 m2">{{ product.name }}</h2>
       <div class="py-2 m2">{{ product.description }}</div>
       <div class="py-2 m2">${{ product.price }}</div>
