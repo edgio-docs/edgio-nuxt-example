@@ -30,9 +30,7 @@ export default {
         <Rating :value="Number(product.rating)" />
       </div>
       <div class="py-2 m2">
-        <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
           Add To Cart
         </button>
       </div>

@@ -21,9 +21,7 @@ export default {
 
 <template>
   <div class="container mx-auto">
-    <div
-      class="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-    >
+    <div class="grid xs:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       <div v-for="product in products" :key="product.name">
         <Prefetch :url="getApiPath(product.href)">
           <NuxtLink :to="product.href">
