@@ -1,16 +1,15 @@
-import fs from "fs";
-import { join } from "path";
+import fs from 'fs'
 
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: "layer0-nuxt-example",
+    title: 'layer0-nuxt-example',
     meta: [
-      { charset: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "" },
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { hid: 'description', name: 'description', content: '' },
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/public/favicon.ico' }],
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
@@ -25,10 +24,10 @@ export default {
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
     // https://go.nuxtjs.dev/typescript
-    "@nuxt/typescript-build",
+    '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/tailwindcss
-    "@nuxtjs/tailwindcss",
-    "@layer0/nuxt/module",
+    '@nuxtjs/tailwindcss',
+    '@layer0/nuxt/module',
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
@@ -37,8 +36,8 @@ export default {
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
     extend() {
-      const BUILD_ID = new Date().getTime();
-      fs.writeFileSync("BUILD_ID.txt", String(BUILD_ID));
+      const BUILD_ID = new Date().getTime()
+      fs.writeFileSync('BUILD_ID.js', `export const BUILD_ID=${String(BUILD_ID)}`)
     },
   },
-};
+}

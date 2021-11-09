@@ -2,8 +2,7 @@
   <div class="container">
     <main class="main">
       <p class="description">
-        This is an example NuxtJS app powered by Layer0. Click a category
-        above to get started.
+        This is an example NuxtJS app powered by Layer0. Click a category above to get started.
       </p>
     </main>
   </div>

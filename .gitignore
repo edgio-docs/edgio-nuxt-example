@@ -90,5 +90,4 @@ sw.*
 *.swp
 # layer0 generated build directory
 .layer0
-# Layer0 generated build directory
-.layer0
+.vscode

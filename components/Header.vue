@@ -3,7 +3,7 @@
     <header class="bg-white rounded-lg p-2 justify-center">
       <div class="container mx-auto logoContainer">
         <a href="/">
-          <img src="/layer0-icon.svg" alt="Layer0 Logo" />
+          <img src="/public/layer0-icon.svg" alt="Layer0 Logo" />
           <div class="text-center text-gray-700">NuxtJS Example</div>
         </a>
       </div>
