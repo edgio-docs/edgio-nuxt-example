@@ -2,32 +2,22 @@
 <html {{ HTML_ATTRS }}>
   <head {{ HEAD_ATTRS }}>
     {{ HEAD }}
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true" />
-    <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
-      media="print"
-      onload="this.media='all'"
-    />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
-      />
-    </noscript>
+  </head>
+  <body {{ BODY_ATTRS }}>
+    {{ APP }}
     <style>
       * {
         font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       }
     </style>
-  </head>
-
-  <body {{ BODY_ATTRS }}>
-    {{ APP }}
+    <link
+      media="print"
+      rel="stylesheet"
+      onload="this.media='all'"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=optional"
+    />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=optional" />
+    </noscript>
   </body>
 </html>

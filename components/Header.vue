@@ -1,101 +1,22 @@
 <template>
-  <nav>
-    <header class="bg-white rounded-lg p-2 justify-center">
-      <div class="container mx-auto logoContainer">
-        <a href="/">
-          <img src="/public/layer0-icon.svg" alt="Layer0 Logo" />
-          <div class="text-center text-gray-700">NuxtJS Example</div>
-        </a>
-      </div>
-      <div class="flex-container mx-auto">
-        <ul>
-          <li v-for="category in categories" :key="category.name">
-            <Prefetch :url="getApiPath(category.href)">
-              <NuxtLink :to="category.href">{{ category.categoryName }}</NuxtLink>
-            </Prefetch>
-          </li>
-        </ul>
-      </div>
-    </header>
-  </nav>
+  <div class="flex flex-row flex-wrap items-center justify-between py-3 px-5">
+    <NuxtLink to="/">
+      <img src="/logo/white.svg" class="h-[25px] w-[60.2px] bg-white/5" />
+    </NuxtLink>
+    <div class="flex flex-row items-center space-x-4 py-1">
+      <NuxtLink to="/about">
+        <span class="text-[#FFFFFF75]">About</span>
+      </NuxtLink>
+      <NuxtLink to="/commerce">
+        <span class="text-[#FFFFFF75]">Commerce</span>
+      </NuxtLink>
+      <a href="https://github.com/layer0-docs/layer0-nuxt-example" target="_blank">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="fill-[#FFFFFF75]" viewBox="0 0 16 16">
+          <path
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+          />
+        </svg>
+      </a>
+    </div>
+  </div>
 </template>
-
-<script lang="ts">
-import { getCategories, getApiPath } from '../lib/cms'
-const { Prefetch } = require('@layer0/vue')
-
-export default {
-  components: {
-    Prefetch,
-  },
-  async fetch() {
-    // @ts-ignore
-    this.categories = await getCategories()
-  },
-  data() {
-    return {
-      categories: [],
-    }
-  },
-  methods: {
-    getApiPath,
-  },
-}
-</script>
-
-<style>
-nav {
-  border-bottom: 1px solid rgba(255, 62, 0, 0.1);
-  font-weight: 300;
-  padding: 0 1em;
-}
-
-li {
-  display: block;
-  float: left;
-}
-
-a {
-  text-decoration: none;
-  display: block;
-  padding: 0.5em;
-}
-
-[aria-current] {
-  position: relative;
-  display: inline-block;
-}
-
-[aria-current]::after {
-  position: absolute;
-  content: '';
-  width: calc(100% - 1em);
-  height: 2px;
-  background-color: rgb(255, 62, 0);
-  display: block;
-  bottom: -1px;
-}
-
-.flex-container {
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-}
-
-.flex-container ul {
-  width: 50%;
-  display: flex;
-  align-items: stretch;
-  justify-content: space-between;
-}
-
-.flex-container li {
-  flex: 0 1 auto;
-  list-style-type: none;
-}
-
-.logoContainer {
-  width: 200px;
-}
-</style>

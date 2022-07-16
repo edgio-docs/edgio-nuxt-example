@@ -1,0 +1,6 @@
+node_modules/
+.layer0
+.nuxt
+dist
+.env
+.env*

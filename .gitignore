@@ -44,9 +44,6 @@ typings/
 # Optional npm cache directory
 .npm
 
-# Optional eslint cache
-.eslintcache
-
 # Optional REPL history
 .node_repl_history
 
@@ -91,3 +88,5 @@ sw.*
 # layer0 generated build directory
 .layer0
 .vscode
+
+layer0/getNode*
