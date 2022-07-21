@@ -14,7 +14,7 @@
                 <h4 class="text-md bg-white py-2 px-4 text-black">{{ item.prices.price.value }} {{ item.prices.price.currencyCode }}</h4>
               </div>
               <HeartIcon className="absolute top-0 right-0 h-[30px] w-[30px] bg-white p-2" />
-              <img width="1200" height="1200" loading="lazy" :src="getImage(item.images[0].url)" />
+              <img v-if="item.images" width="1200" height="1200" loading="lazy" :src="getImage(item.images[0].url)" />
             </NuxtLink>
           </Prefetch>
         </div>
@@ -28,10 +28,10 @@
 
 <script>
 import { Prefetch } from '@layer0/vue'
-import { relativizeURL } from '../lib/helper'
 import HeartIcon from '../components/HeartIcon.vue'
 import LeftSideBar from '../components/LeftSideBar.vue'
 import RightSideBar from '../components/RightSideBar.vue'
+import { relativizeURL, getOrigin, filterProducts } from '../lib/helper'
 
 export default {
   components: {
@@ -43,38 +43,25 @@ export default {
   methods: {
     getImage: (url) => relativizeURL(url),
   },
-  async asyncData({ req, redirect }) {
-    let link = undefined
+  watchQuery: (newVal, oldVal) => {
+    return newVal.filter !== oldVal.filter
+  },
+  async asyncData({ req, params, query, redirect }) {
     let data = undefined
-    // If in browser (i.e. on client side)
-    if (typeof window !== 'undefined') {
-      link = window.location.origin
-    }
-    // If on server side (either on Layer0 or on local)
-    else {
-      let hostURL = req ? req.headers.host : process.env.API_URL
-      // You have access to req.headers.host when running npm run dev
-      // You have access to process.env.API_URL on Layer0 env after deployment, but there is no req header
-      // Why's that? It's an added benefit of being on Layer0, as the project is compiled with target: 'static',
-      // Which removes the req object from asyncData in nuxt to produce a full static application.
-      // This rather is the beauty to ISG with Nuxt.js and Layer0, that you can combine full static site with
-      // server side capabilities
-      if (hostURL) {
-        hostURL = hostURL.replace('http://', '')
-        hostURL = hostURL.replace('https://', '')
-        if (hostURL.includes('localhost:')) {
-          link = `http://${hostURL}`
-        } else {
-          link = `https://${hostURL}`
-        }
-      }
-    }
-    let resp = await fetch(`${link}/l0-api/products/all`)
+    let resp = await fetch(`${getOrigin(req)}/l0-api/products/all`)
     if (!resp.ok) {
       redirect(404, '/error')
     } else {
       data = await resp.json()
+      if (params.name === 'jackets') {
+        data = data.filter((i) => i.name.toLowerCase().includes('jacket'))
+      } else if (params.name === 't-shirts') {
+        data = data.filter((i) => i.name.toLowerCase().includes('t-shirt'))
+      } else if (params.name === 'joggers') {
+        data = data.filter((i) => i.name.toLowerCase().includes('jogger'))
+      }
     }
+    data = filterProducts(data, query.filter)
     return { data }
   },
 }

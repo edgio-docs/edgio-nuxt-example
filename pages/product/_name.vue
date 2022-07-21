@@ -7,7 +7,7 @@
           <h4 class="bg-white py-2 px-4 text-lg text-black">{{ data.prices.price.value }} {{ data.prices.price.currencyCode }}</h4>
         </div>
         <HeartIcon className="absolute top-0 right-0 h-[50px] w-[50px] bg-white p-2" />
-        <div class="relative flex h-[600px] w-full flex-col items-center">
+        <div v-if="data.images" class="relative flex h-[600px] w-full flex-col items-center">
           <img loading="lazy" :src="relativizeURL(data.images[0].url)" class="h-auto w-full max-w-[600px]" />
         </div>
         <div class="product-thumbnails flex flex-row items-start overflow-x-scroll">
@@ -55,7 +55,7 @@
           v-for="image in listOtherImages"
           class="h-[250px] min-w-[250px] cursor-pointer hover:bg-white"
         >
-          <img loading="lazy" :src="relativizeURL(image.images[0].url)" class="h-auto w-[250px] cursor-pointer hover:bg-white" />
+          <img v-if="image.images" loading="lazy" :src="relativizeURL(image.images[0].url)" class="h-auto w-[250px] cursor-pointer hover:bg-white" />
         </NuxtLink>
       </div>
     </div>
@@ -75,9 +75,9 @@
 
 <script>
 import { Prefetch } from '@layer0/vue'
-import { relativizeURL } from '../../lib/helper'
 import StarIcon from '../../components/StarIcon.vue'
 import HeartIcon from '../../components/HeartIcon.vue'
+import { relativizeURL, getOrigin } from '../../lib/helper'
 import StarIconOutline from '../../components/StarIconOutline.vue'
 
 export default {
@@ -107,32 +107,8 @@ export default {
   },
   async asyncData({ req, params, redirect }) {
     const slug = params.name
-    let link = undefined
     let data = undefined
-    // If in browser (i.e. on client side)
-    if (typeof window !== 'undefined') {
-      link = window.location.origin
-    }
-    // If on server side (either on Layer0 or on local)
-    else {
-      let hostURL = req ? req.headers.host : process.env.API_URL
-      // You have access to req.headers.host when running npm run dev
-      // You have access to process.env.API_URL on Layer0 env after deployment, but there is no req header
-      // Why's that? It's an added benefit of being on Layer0, as the project is compiled with target: 'static',
-      // Which removes the req object from asyncData in nuxt to produce a full static application.
-      // This rather is the beauty to ISG with Nuxt.js and Layer0, that you can combine full static site with
-      // server side capabilities
-      if (hostURL) {
-        hostURL = hostURL.replace('http://', '')
-        hostURL = hostURL.replace('https://', '')
-        if (hostURL.includes('localhost:')) {
-          link = `http://${hostURL}`
-        } else {
-          link = `https://${hostURL}`
-        }
-      }
-    }
-    let resp = await fetch(`${link}/l0-api/products/${slug}`)
+    let resp = await fetch(`${getOrigin(req)}/l0-api/products/${slug}`)
     if (!resp.ok) {
       redirect(404, '/error')
     } else {
