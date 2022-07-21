@@ -1,7 +1,7 @@
 import { Router } from '@layer0/core'
 import { nuxtRoutes } from '@layer0/nuxt'
 import getPrerenderRequests from './getPrerenderRequests'
-import { API_CACHE_HANDLER, EDGE_CACHE_HANDLER } from './cache'
+import { API_CACHE_HANDLER, IMAGE_CACHE_HANDLER, EDGE_CACHE_HANDLER } from './cache'
 
 const router = new Router()
 
@@ -37,6 +37,9 @@ router.match('/__layer0__/:path*', EDGE_CACHE_HANDLER)
 
 // API (Any backend) caching
 router.match('/l0-api/:path*', API_CACHE_HANDLER)
+
+// Image caching
+router.match('/l0-opt', IMAGE_CACHE_HANDLER)
 
 router.match('/', EDGE_CACHE_HANDLER)
 router.match('/about', EDGE_CACHE_HANDLER)
