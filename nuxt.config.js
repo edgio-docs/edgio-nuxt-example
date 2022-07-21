@@ -14,4 +14,13 @@ export default {
       },
     },
   },
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+        name: 'custom',
+        path: '/commerce/:name',
+        component: resolve(__dirname, 'pages/commerce.vue'),
+      })
+    },
+  },
 }
