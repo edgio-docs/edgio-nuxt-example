@@ -1,4 +1,4 @@
-const { isProductionBuild } = require('@layer0/core/environment')
+const fs = require('fs')
 
 // This file was automatically added by layer0 init.
 // You should commit this file to source control.
@@ -25,7 +25,7 @@ const config = {
   },
 }
 
-if (isProductionBuild()) {
+if (fs.existsSync('./layer0/getNodeModules.js')) {
   const includeFiles = require('./layer0/getNodeModules')
   // All dependencies inside @nuxt/core
   config['includeFiles'] = includeFiles
