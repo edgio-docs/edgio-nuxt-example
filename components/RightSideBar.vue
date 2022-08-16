@@ -1,9 +1,7 @@
 <template>
   <div class="flex w-full flex-col">
-    <div class="flex flex-col" :key="value" v-for="(item, value, index) in listingItems">
-      <h2 class="text-white text-lg font-medium" :class="{ 'mt-10': index > 0 }">
-        {{ value }}
-      </h2>
+    <h2 class="font-light text-[#FFFFFF75] text-md mt-2">Relevance</h2>
+    <div class="flex flex-col" :key="value" v-for="(item, value) in listingItems">
       <a
         :key="subItem.name"
         v-for="subItem in item"
