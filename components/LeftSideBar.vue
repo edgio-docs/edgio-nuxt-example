@@ -1,18 +1,30 @@
 <template>
   <div class="flex w-full flex-col">
-    <div class="flex flex-col" :key="value" v-for="(item, value, index) in listingItems">
-      <h2 class="text-white text-lg font-medium" :class="{ 'mt-10': index > 0 }">
-        {{ value }}
-      </h2>
-      <NuxtLink :key="subItem.name" :to="subItem.route" v-for="subItem in item">
-        <h3
-          class="text-md mt-2"
-          :class="{ 'font-medium text-[#FFFFFF]': $route.path === subItem.route, 'font-light text-[#FFFFFF75]': $route.path !== subItem.route }"
-        >
-          {{ subItem.name }}
-        </h3>
-      </NuxtLink>
-    </div>
+    <NuxtLink
+      to="/commerce"
+      class="text-md mt-2"
+      :class="{ 'font-medium text-[#FFFFFF]': $route.path === '/commerce', 'font-light text-[#FFFFFF75]': $route.path !== '/commerce' }"
+    >
+      Shop All
+    </NuxtLink>
+    <NuxtLink
+      :key="item.slug"
+      class="text-md mt-2"
+      v-for="item in listingItems"
+      :to="`/commerce/${item.slug}`"
+      :class="{
+        'font-medium text-[#FFFFFF]': $route.path === `/commerce/${item.slug}`,
+        'font-light text-[#FFFFFF75]': $route.path !== `/commerce/${item.slug}`,
+      }"
+    >
+      {{ item.name }}
+    </NuxtLink>
+    <NuxtLink
+      :key="index"
+      to="/commerce"
+      v-for="(item, index) in fallbackListingItems"
+      class="mt-2 text-md px-10 animate-pulse bg-white/50 py-1.5 w-[10px]"
+    ></NuxtLink>
   </div>
 </template>
 
@@ -20,26 +32,16 @@
 export default {
   data: () => {
     return {
-      listingItems: {
-        'All Categories': [
-          {
-            name: 'Joggers',
-            route: '/commerce/joggers',
-          },
-          {
-            name: 'Jackets',
-            route: '/commerce/jackets',
-          },
-          {
-            name: 'T-Shirts',
-            route: '/commerce/t-shirts',
-          },
-          {
-            name: 'Shop All',
-            route: '/commerce/shop-all',
-          },
-        ],
-      },
+      listingItems: [],
+      fallbackListingItems: new Array(9).fill(0),
+    }
+  },
+  async mounted() {
+    let resp = await fetch('/l0-api/categories/all')
+    if (resp.ok) {
+      let data = await resp.json()
+      this.listingItems = data
+      this.fallbackListingItems = []
     }
   },
 }
