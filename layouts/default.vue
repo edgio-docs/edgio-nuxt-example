@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import Layer0RUM from '../layer0/rum.js'
-import Header from '../components/Header.vue'
+import Layer0RUM from '@/layer0/rum.js'
+import Header from '@/components/Header.vue'
 import { install } from '@layer0/prefetch/window'
 import installDevtools from '@layer0/devtools/install'
 

@@ -1,26 +1,34 @@
 <template>
-  <div v-if="data" class="flex-col items-center justify-start">
-    <div class="mb-5 flex w-full flex-row items-start px-5">
-      <div class="hidden w-[15%] pt-5 md:block">
+  <div class="flex-col items-center justify-start">
+    <div class="flex w-full flex-row items-start px-5">
+      <div class="pt-5 flex flex-col min-w-[200px]">
+        <RightSideBar />
+        <div class="mt-5"></div>
         <LeftSideBar />
       </div>
-      <div class="flex w-full flex-col items-start pt-5 md:w-[70%]">
-        <h2 class="text-[#FFFFFF75]">Showing {{ data.length }} Results</h2>
-        <div class="mt-5 flex flex-row flex-wrap items-start">
-          <Prefetch :key="item.path" v-for="item in data" :url="`/l0-api/products/${item.path.replace(/\//g, '')}`">
-            <NuxtLink :to="`/product/${item.path.replace(/\//g, '')}`" class="relative mt-2 w-full border border-white p-1 sm:w-1/2 md:w-1/3">
+      <div class="flex flex-col items-start pt-5">
+        <h2 class="text-[#FFFFFF75]">Showing {{ data ? data.length : '...' }} Results</h2>
+        <div class="mt-5 grid grid-cols-1 sm:grd-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+          <Prefetch :key="item.path" v-for="item in data || fallbackData" :url="`/l0-api/products/${item.slug}`">
+            <NuxtLink :to="`/product/${item.slug}`" class="relative mt-2 border border-white p-1">
               <div class="absolute top-0 left-0 z-10 flex flex-col items-start">
-                <h3 class="bg-white py-2 px-4 text-xl font-medium text-black">{{ item.name }}</h3>
-                <h4 class="text-md bg-white py-2 px-4 text-black">{{ item.prices.price.value }} {{ item.prices.price.currencyCode }}</h4>
+                <h3 class="bg-white py-1 px-2 text-xs md:py-2 md:px-4 md:text-xl font-medium text-black">{{ item.name }}</h3>
+                <h4 class="bg-white py-1 px-2 text-xs md:py-2 md:px-4 md:text-md text-black">
+                  {{ item.prices.price.value }}{{ item.prices.price.currencyCode }}
+                </h4>
               </div>
-              <HeartIcon className="absolute top-0 right-0 h-[30px] w-[30px] bg-white p-2" />
-              <img v-if="item.images" width="1200" height="1200" loading="lazy" :src="getImage(item.images[0].url)" />
+              <img
+                width="1200"
+                height="1200"
+                loading="lazy"
+                v-if="item.images"
+                :src="getImage(item.images[0].url)"
+                class="h-full object-contain bg-white"
+              />
+              <div v-if="!item.images" class="h-full w-full bg-white/50 animate-pulse"></div>
             </NuxtLink>
           </Prefetch>
         </div>
-      </div>
-      <div class="hidden w-[15%] pt-5 md:block">
-        <RightSideBar />
       </div>
     </div>
   </div>
@@ -28,10 +36,10 @@
 
 <script>
 import { Prefetch } from '@layer0/vue'
-import HeartIcon from '../components/HeartIcon.vue'
-import LeftSideBar from '../components/LeftSideBar.vue'
-import RightSideBar from '../components/RightSideBar.vue'
-import { relativizeURL, getOrigin, filterProducts } from '../lib/helper'
+import HeartIcon from '@/components/HeartIcon.vue'
+import LeftSideBar from '@/components/LeftSideBar.vue'
+import RightSideBar from '@/components/RightSideBar.vue'
+import { relativizeURL, getOrigin, filterProducts } from '@/lib/helper'
 
 export default {
   components: {
@@ -40,29 +48,47 @@ export default {
     LeftSideBar,
     RightSideBar,
   },
+  data: () => {
+    return {
+      fallbackData: new Array(12).fill(0).map((_, _ind) => ({
+        name: '',
+        slug: '',
+        path: `/${_ind}`,
+        prices: { price: { value: '', currencyCode: '' } },
+      })),
+    }
+  },
   methods: {
     getImage: (url) => relativizeURL(url),
+    createFilter() {
+      if (!this.$route.query || !this.$route.query['filter']) {
+        this.$router.push({ path: this.$route.path, query: { filter: 'trending' } })
+      }
+    },
   },
   watchQuery: (newVal, oldVal) => {
     return newVal.filter !== oldVal.filter
   },
+  watch: {
+    $route(to, from) {
+      this.createFilter()
+    },
+  },
+  mounted() {
+    this.createFilter()
+  },
   async asyncData({ req, params, query, redirect }) {
-    let data = undefined
-    let resp = await fetch(`${getOrigin(req)}/l0-api/products/all`)
+    let resp = await fetch(`${getOrigin(req)}/l0-api/${params.name ? `categories/${params.name}` : 'products/all'}`)
     if (!resp.ok) {
       redirect(404, '/error')
     } else {
-      data = await resp.json()
-      if (params.name === 'jackets') {
-        data = data.filter((i) => i.name.toLowerCase().includes('jacket'))
-      } else if (params.name === 't-shirts') {
-        data = data.filter((i) => i.name.toLowerCase().includes('t-shirt'))
-      } else if (params.name === 'joggers') {
-        data = data.filter((i) => i.name.toLowerCase().includes('jogger'))
+      let data = await resp.json()
+      if (params.name) {
+        data = data['items']
       }
+      data = filterProducts(data, query.filter)
+      return { data }
     }
-    data = filterProducts(data, query.filter)
-    return { data }
   },
 }
 </script>
