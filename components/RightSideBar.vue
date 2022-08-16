@@ -1,6 +1,6 @@
 <template>
   <div class="flex w-full flex-col">
-    <h2 class="font-light text-[#FFFFFF75] text-md mt-2">Relevance</h2>
+    <h2 class="font-light text-[#FFFFFF75] text-md">Relevance</h2>
     <div class="flex flex-col" :key="value" v-for="(item, value) in listingItems">
       <a
         :key="subItem.name"

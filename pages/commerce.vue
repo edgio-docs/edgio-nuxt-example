@@ -12,8 +12,8 @@
           <Prefetch :key="item.path" v-for="item in data || fallbackData" :url="`/l0-api/products/${item.slug}`">
             <NuxtLink :to="`/product/${item.slug}`" class="relative mt-2 border border-white p-1">
               <div class="absolute top-0 left-0 z-10 flex flex-col items-start">
-                <h3 class="bg-white py-1 px-2 text-xs md:py-2 md:px-4 md:text-xl font-medium text-black">{{ item.name }}</h3>
-                <h4 class="bg-white py-1 px-2 text-xs md:py-2 md:px-4 md:text-md text-black">
+                <h3 class="border border-gray-200 bg-white py-1 px-2 text-xs md:py-2 md:px-4 md:text-xl font-medium text-black">{{ item.name }}</h3>
+                <h4 class="border border-gray-200 bg-white py-1 px-2 text-xs md:py-2 md:px-4 md:text-lg text-black">
                   {{ item.prices.price.value }}{{ item.prices.price.currencyCode }}
                 </h4>
               </div>
