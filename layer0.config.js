@@ -1,9 +1,7 @@
-const fs = require('fs')
-
 // This file was automatically added by layer0 init.
 // You should commit this file to source control.
 // Learn more about this file at https://docs.layer0.co/guides/layer0_config
-const config = {
+module.exports = {
   routes: './layer0/routes.js',
   connector: '@layer0/nuxt',
   backends: {
@@ -23,12 +21,5 @@ const config = {
       disableCheckCert: true,
     },
   },
+  includeFiles: require('./layer0/getNodeModules'),
 }
-
-if (fs.existsSync('./layer0/getNodeModules.js')) {
-  const includeFiles = require('./layer0/getNodeModules')
-  // All dependencies inside @nuxt/core
-  config['includeFiles'] = includeFiles
-}
-
-module.exports = config
