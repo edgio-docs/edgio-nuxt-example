@@ -2,9 +2,7 @@
   <div class="flex-col items-center justify-start">
     <div class="flex w-full flex-row items-start px-5">
       <div class="pt-5 flex flex-col min-w-[200px]">
-        <RightSideBar />
-        <div class="mt-5"></div>
-        <LeftSideBar />
+        <Sidebar />
       </div>
       <div class="flex flex-col items-start pt-5">
         <h2 class="text-[#FFFFFF75]">Showing {{ data ? data.length : '...' }} Results</h2>
@@ -36,17 +34,15 @@
 
 <script>
 import { Prefetch } from '@layer0/vue'
+import Sidebar from '@/components/Sidebar.vue'
 import HeartIcon from '@/components/HeartIcon.vue'
-import LeftSideBar from '@/components/LeftSideBar.vue'
-import RightSideBar from '@/components/RightSideBar.vue'
 import { relativizeURL, getOrigin, filterProducts } from '@/lib/helper'
 
 export default {
   components: {
+    Sidebar,
     Prefetch,
     HeartIcon,
-    LeftSideBar,
-    RightSideBar,
   },
   data: () => {
     return {

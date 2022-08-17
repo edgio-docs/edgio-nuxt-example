@@ -1,8 +1,21 @@
 <template>
   <div class="flex w-full flex-col">
+    <h2 class="font-light text-[#FFFFFF75] text-md">Relevance</h2>
+    <a
+      :key="item.filter"
+      v-for="item in relevance"
+      @click="pushFilter(item.filter)"
+      class="text-md mt-2 cursor-pointer"
+      :class="{
+        'font-medium text-[#FFFFFF]': $route.query.filter === item.filter,
+        'font-light text-[#FFFFFF75]': $route.query.filter !== item.filter,
+      }"
+    >
+      {{ item.name }}
+    </a>
     <NuxtLink
       to="/commerce"
-      class="text-md mt-2"
+      class="text-md mt-7"
       :class="{ 'font-medium text-[#FFFFFF]': $route.path === '/commerce', 'font-light text-[#FFFFFF75]': $route.path !== '/commerce' }"
     >
       Shop All
@@ -30,8 +43,27 @@
 
 <script>
 export default {
+  methods: {
+    pushFilter(filter) {
+      this.$router.push({ path: this.$route.path, query: { filter } })
+    },
+  },
   data: () => {
     return {
+      relevance: [
+        {
+          name: 'Trending',
+          filter: 'trending',
+        },
+        {
+          name: 'Price: Low to High',
+          filter: 'price-low-to-high',
+        },
+        {
+          name: 'Price: High to Low',
+          filter: 'price-high-to-low',
+        },
+      ],
       listingItems: [],
       fallbackListingItems: new Array(9).fill(0),
     }
