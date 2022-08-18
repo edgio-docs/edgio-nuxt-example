@@ -17,7 +17,7 @@ export default {
   },
   mounted: () => {
     // Monitor real user as it gets mounted
-    Layer0RUM('a7990ffe-9ee9-478c-b94a-95489221ddd3')
+    Layer0RUM('1f41ba2b-dc10-4935-8d7d-62ac857a4d63')
     // Enable service worker inside the window
     install()
     // Enable devtools manually, instead of relying on defaults by Layer0
