@@ -23,7 +23,7 @@
                 :src="getImage(item.images[0].url)"
                 class="h-full object-contain bg-white"
               />
-              <div v-if="!item.images" class="h-full w-full bg-white/50 animate-pulse"></div>
+              <div v-if="!item.images" class="h-full w-full bg-white/50 animate-pulse min-h-[100px] min-w-[100px]"></div>
             </NuxtLink>
           </Prefetch>
         </div>
