@@ -6,7 +6,7 @@
       </div>
       <div class="flex flex-col items-start pt-5">
         <h2 class="text-[#FFFFFF75]">Showing {{ data ? data.length : '...' }} Results</h2>
-        <div class="mt-5 grid grid-cols-1 sm:grd-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+        <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
           <Prefetch :key="item.path" v-for="item in data || fallbackData" :url="`/l0-api/products/${item.slug}`">
             <NuxtLink :to="`/product/${item.slug}`" class="relative mt-2 border border-white p-1">
               <div class="absolute top-0 left-0 z-10 flex flex-col items-start">
