@@ -5,7 +5,7 @@ import fetch from 'node-fetch'
 export default async function getPathsToPrerender() {
   const prerenderPaths = ['/', '/about', '/commerce']
   // Get all the slugs for the product pages
-  const respCall = await fetch('https://layer0-docs-layer0-ecommmerce-api-example-default.layer0-limelight.link/products/all')
+  const respCall = await fetch('https://edgio-docs-edgio-ecommmerce-api-example-default.edgio-limelight.link/products/all')
   if (respCall.ok) {
     const resp = await respCall.json()
     // For each product, derive the non slash path and create the next data url to populate on the edge
@@ -17,6 +17,6 @@ export default async function getPathsToPrerender() {
   } else {
     console.log('The fetch call failed, no paths to populate cache with.')
   }
-  // Finally, return all the paths with the intended mapping to Layer0 prerender syntax
+  // Finally, return all the paths with the intended mapping to Edgio prerender syntax
   return prerenderPaths.filter((i) => i).map((i) => ({ path: i }))
 }

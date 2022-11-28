@@ -5,5 +5,5 @@
       "@/*": ["./*"]
     }
   },
-  "exclude": ["node_modules", ".nuxt", "dist", ".layer0", ".github"]
+  "exclude": ["node_modules", ".nuxt", "dist", ".edgio", ".github"]
 }

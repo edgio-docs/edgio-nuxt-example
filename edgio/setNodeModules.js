@@ -19,7 +19,7 @@ const setNodeModules = async () => {
   })
   // Sort the set of packages
   fs.writeFileSync(
-    './layer0/getNodeModules.js',
+    './edgio/getNodeModules.js',
     `module.exports=${JSON.stringify(
       Object.keys(packages)
         .sort()
