@@ -13,13 +13,7 @@
           <img loading="lazy" :src="relativizeURL(data.images[0].url)" class="h-auto w-full max-w-[600px]" />
         </div>
         <div class="mt-5 product-thumbnails flex flex-row gap-x-2 items-start overflow-x-scroll">
-          <img
-            loading="lazy"
-            :key="image.url"
-            v-for="image in data.images"
-            :src="relativizeURL(image.url)"
-            class="h-[250px] w-auto hover:bg-white"
-          />
+          <img loading="lazy" :key="image.url" v-for="image in data.images" :src="relativizeURL(image.url)" class="h-[250px] w-auto hover:bg-white" />
         </div>
       </div>
       <div class="flex w-full lg:w-1/2 flex-col items-start px-10">
@@ -61,7 +55,7 @@
 </style>
 
 <script>
-import { Prefetch } from '@layer0/vue'
+import { Prefetch } from '@edgio/vue'
 import StarIcon from '@/components/StarIcon.vue'
 import HeartIcon from '@/components/HeartIcon.vue'
 import { relativizeURL, getOrigin } from '@/lib/helper'
