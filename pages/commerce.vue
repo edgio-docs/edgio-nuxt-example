@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { Prefetch } from '@layer0/vue'
+import { Prefetch } from '@edgio/vue'
 import Sidebar from '@/components/Sidebar.vue'
 import HeartIcon from '@/components/HeartIcon.vue'
 import { relativizeURL, getOrigin, filterProducts } from '@/lib/helper'

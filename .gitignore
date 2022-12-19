@@ -88,5 +88,5 @@ sw.*
 # layer0 generated build directory
 .layer0
 .vscode
-
+.edgio
 layer0/getNode*
