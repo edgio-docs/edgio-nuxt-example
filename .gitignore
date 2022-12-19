@@ -85,8 +85,6 @@ sw.*
 
 # Vim swap files
 *.swp
-# layer0 generated build directory
-.layer0
-.vscode
+
+# Edgio generated build directory
 .edgio
-layer0/getNode*

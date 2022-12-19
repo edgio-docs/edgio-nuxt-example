@@ -1,7 +1,6 @@
 node_modules/
-.layer0
+.edgio
 .nuxt
 dist
 .env
 .env*
-.edgio
